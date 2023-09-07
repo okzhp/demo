@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.elites.center.writer.mapper.CenterOrderDistributionMapper">
+  <resultMap id="BaseResultMap" type="com.elites.center.writer.domain.CenterOrderDistribution">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="product_id" jdbcType="INTEGER" property="productId" />
+    <result column="order_flow_id" jdbcType="INTEGER" property="orderFlowId" />
+    <result column="order_no" jdbcType="VARCHAR" property="orderNo" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="group_id" jdbcType="INTEGER" property="groupId" />
+    <result column="order_flow_node" jdbcType="INTEGER" property="orderFlowNode" />
+    <result column="current_writer_id" jdbcType="INTEGER" property="currentWriterId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, product_id, order_flow_id, order_no, type, group_id, order_flow_node, current_writer_id, 
+    create_time, create_by, update_time, update_by
+  </sql>
+  <select id="selectByExample" parameterType="com.elites.center.writer.domain.CenterOrderDistributionExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from center_order_distribution
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from center_order_distribution
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from center_order_distribution
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.elites.center.writer.domain.CenterOrderDistributionExample">
+    delete from center_order_distribution
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.elites.center.writer.domain.CenterOrderDistribution">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into center_order_distribution (product_id, order_flow_id, order_no, 
+      type, group_id, order_flow_node, 
+      current_writer_id, create_time, create_by, 
+      update_time, update_by)
+    values (#{productId,jdbcType=INTEGER}, #{orderFlowId,jdbcType=INTEGER}, #{orderNo,jdbcType=VARCHAR}, 
+      #{type,jdbcType=INTEGER}, #{groupId,jdbcType=INTEGER}, #{orderFlowNode,jdbcType=INTEGER}, 
+      #{currentWriterId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.elites.center.writer.domain.CenterOrderDistribution">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into center_order_distribution
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="productId != null">
+        product_id,
+      </if>
+      <if test="orderFlowId != null">
+        order_flow_id,
+      </if>
+      <if test="orderNo != null">
+        order_no,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="groupId != null">
+        group_id,
+      </if>
+      <if test="orderFlowNode != null">
+        order_flow_node,
+      </if>
+      <if test="currentWriterId != null">
+        current_writer_id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="productId != null">
+        #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="orderFlowId != null">
+        #{orderFlowId,jdbcType=INTEGER},
+      </if>
+      <if test="orderNo != null">
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="groupId != null">
+        #{groupId,jdbcType=INTEGER},
+      </if>
+      <if test="orderFlowNode != null">
+        #{orderFlowNode,jdbcType=INTEGER},
+      </if>
+      <if test="currentWriterId != null">
+        #{currentWriterId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.elites.center.writer.domain.CenterOrderDistributionExample" resultType="java.lang.Long">
+    select count(*) from center_order_distribution
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update center_order_distribution
+    <set>
+      <if test="row.id != null">
+        id = #{row.id,jdbcType=INTEGER},
+      </if>
+      <if test="row.productId != null">
+        product_id = #{row.productId,jdbcType=INTEGER},
+      </if>
+      <if test="row.orderFlowId != null">
+        order_flow_id = #{row.orderFlowId,jdbcType=INTEGER},
+      </if>
+      <if test="row.orderNo != null">
+        order_no = #{row.orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="row.type != null">
+        type = #{row.type,jdbcType=INTEGER},
+      </if>
+      <if test="row.groupId != null">
+        group_id = #{row.groupId,jdbcType=INTEGER},
+      </if>
+      <if test="row.orderFlowNode != null">
+        order_flow_node = #{row.orderFlowNode,jdbcType=INTEGER},
+      </if>
+      <if test="row.currentWriterId != null">
+        current_writer_id = #{row.currentWriterId,jdbcType=INTEGER},
+      </if>
+      <if test="row.createTime != null">
+        create_time = #{row.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="row.createBy != null">
+        create_by = #{row.createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="row.updateTime != null">
+        update_time = #{row.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="row.updateBy != null">
+        update_by = #{row.updateBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update center_order_distribution
+    set id = #{row.id,jdbcType=INTEGER},
+      product_id = #{row.productId,jdbcType=INTEGER},
+      order_flow_id = #{row.orderFlowId,jdbcType=INTEGER},
+      order_no = #{row.orderNo,jdbcType=VARCHAR},
+      type = #{row.type,jdbcType=INTEGER},
+      group_id = #{row.groupId,jdbcType=INTEGER},
+      order_flow_node = #{row.orderFlowNode,jdbcType=INTEGER},
+      current_writer_id = #{row.currentWriterId,jdbcType=INTEGER},
+      create_time = #{row.createTime,jdbcType=TIMESTAMP},
+      create_by = #{row.createBy,jdbcType=VARCHAR},
+      update_time = #{row.updateTime,jdbcType=TIMESTAMP},
+      update_by = #{row.updateBy,jdbcType=VARCHAR}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.elites.center.writer.domain.CenterOrderDistribution">
+    update center_order_distribution
+    <set>
+      <if test="productId != null">
+        product_id = #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="orderFlowId != null">
+        order_flow_id = #{orderFlowId,jdbcType=INTEGER},
+      </if>
+      <if test="orderNo != null">
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="groupId != null">
+        group_id = #{groupId,jdbcType=INTEGER},
+      </if>
+      <if test="orderFlowNode != null">
+        order_flow_node = #{orderFlowNode,jdbcType=INTEGER},
+      </if>
+      <if test="currentWriterId != null">
+        current_writer_id = #{currentWriterId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.elites.center.writer.domain.CenterOrderDistribution">
+    update center_order_distribution
+    set product_id = #{productId,jdbcType=INTEGER},
+      order_flow_id = #{orderFlowId,jdbcType=INTEGER},
+      order_no = #{orderNo,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      group_id = #{groupId,jdbcType=INTEGER},
+      order_flow_node = #{orderFlowNode,jdbcType=INTEGER},
+      current_writer_id = #{currentWriterId,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
