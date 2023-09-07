@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 // 指定要扫描的Mapper类的包的路径
-//@MapperScan("com.example.demo.mapper")
+@MapperScan(basePackages = {"com.example.demo.mapper","com.elites.center.product.mapper"})
 public class DemoApplication {
 
     public static void main(String[] args) {
