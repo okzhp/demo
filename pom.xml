@@ -19,6 +19,8 @@
         <module>practice</module>
         <module>mybatis-generator</module>
         <module>mybatis_source</module>
+        <module>spring_source</module>
+        <module>spring_s</module>
     </modules>
 
     <properties>
@@ -36,10 +38,10 @@
     <description>demo</description>
 
     <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-mail</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-test</artifactId>-->
+<!--        </dependency>-->
     </dependencies>
     <dependencyManagement>
         <dependencies>

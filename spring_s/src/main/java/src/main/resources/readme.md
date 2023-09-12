@@ -1,0 +1,1 @@
+1、定义一个BeanFactory类，里面放一个map
