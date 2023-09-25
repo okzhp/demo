@@ -8,7 +8,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
@@ -18,17 +18,24 @@ class Test<E> extends ArrayList<E>{
         super.removeRange(fromIndex, toIndex);
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
+        ExecutorService executorService = Executors.newFixedThreadPool(50);
+        List<Future<Result>> list = new ArrayList<>();
+        for (int i = 0; i < 1400000; i++) {
+            Future<Result> res = executorService.submit(new ProductChild());
+            list.add(res);
+        }
+        int boy = 0,girl = 0;
+        for (Future<Result> future : list) {
+//            System.out.printf("boy:%4d,girl:%4d \n",future.get().getBoy(),future.get().getGirl());
+            boy += future.get().getBoy();
+            girl += future.get().getGirl();
+        }
+        System.out.printf("boy:%d \n",boy);
+        System.out.printf("girl:%d \n",girl);
 
-        System.out.println("1".equals(Integer.valueOf(1)));
+        executorService.shutdown();
 
-        List<Stu> list = new ArrayList();
-        list.add(new Stu(1,"a"));
-        list.add(new Stu(2,"b"));
-        list.add(new Stu(3,"c"));
-        System.out.println(list.toString());
-
-        System.out.println(new ArrayList<>(list.subList(0,0)));
 
 //
 //
@@ -54,39 +61,73 @@ class Test<E> extends ArrayList<E>{
 //        System.out.println(list);
     }
 
+    static class Result{
+        private Integer boy = 0;
+        private Integer girl = 0;
 
-
-
-
-
-
-
-    @Data
-    static class Stu{
-        private int id;
-        private String name;
-
-        public Stu(int id, String name) {
-            this.id = id;
-            this.name = name;
+        public Integer getBoy() {
+            return boy;
         }
 
-        public int getId() {
-            return id;
+        public void setBoy(Integer boy) {
+            this.boy = boy;
         }
 
-        public void setId(int id) {
-            this.id = id;
+        public Integer getGirl() {
+            return girl;
         }
 
-        public String getName() {
-            return name;
+        public void setGirl(Integer girl) {
+            this.girl = girl;
         }
 
-        public void setName(String name) {
-            this.name = name;
+        public void boyInc(){
+            boy++;
+        }
+
+        public void girlInc(){
+            girl++;
+        }
+
+        @Override
+        public String toString() {
+            return "Result{" +
+                    "boy=" + boy +
+                    ", girl=" + girl +
+                    '}';
         }
     }
+
+    static class ProductChild implements Callable<Result> {
+
+
+        private ThreadLocal<Result> resThreadLocal = new ThreadLocal<>();
+
+        private Random random = new Random();
+
+        @Override
+        public Result call() throws Exception {
+//            resThreadLocal.set(new Result());
+//            Result res = resThreadLocal.get();
+            Result res = new Result();
+            while (res.getBoy() == 0){
+                if (random.nextBoolean()){
+                    res.boyInc();
+                }else {
+                    res.girlInc();
+                }
+            }
+            return res;
+        }
+    }
+
+
+
+
+
+
+
+
 
 }
 

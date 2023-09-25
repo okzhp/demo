@@ -1,9 +1,5 @@
 package com.example.demo.controller;
 
-import com.elites.center.product.domain.CenterCountry;
-import com.elites.center.product.domain.CenterProductTag;
-import com.elites.center.product.mapper.CenterCountryMapper;
-import com.elites.center.product.mapper.CenterProductTagMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,23 +8,7 @@ import java.util.List;
 
 @RestController
 public class TestController {
-    @Autowired
-    private CenterProductTagMapper centerProductTagMapper;
 
-    @Autowired
-    private CenterCountryMapper countryMapper;
-
-    @PostMapping("/test/a")
-    public String test(CenterCountry country){
-        int i = countryMapper.insert(country);
-        return i==0?"失败":"成功";
-    }
-
-    @PostMapping("/test/b")
-    public String test(Integer id){
-        CenterCountry centerCountry = countryMapper.selectByPrimaryKey(id);
-        return centerCountry==null?"失败":"成功";
-    }
 
 //    @GetMapping("/test/b")
 //    pubZlic String test1(){
